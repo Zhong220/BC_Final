@@ -1,5 +1,5 @@
-var SimpleToken = artifacts.require("SimpleToken");
+const SimpleToken = artifacts.require("SimpleToken");
 
-module.exports = function(deployer) {
-  deployer.deploy(SimpleToken);
+module.exports = function (deployer) {
+  deployer.deploy(SimpleToken, 1000);
 };
