@@ -1,30 +1,34 @@
-// ── src/pages/Home.tsx ───────────────────────
+// src/pages/Home.tsx
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, HeartOff } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { ProductsCtx } from '@/context/ProductsContext';
+import ProductCard from '@/components/ProductCard';
 
-export default function Home(){
+export default function Home() {
   const nav = useNavigate();
   const ctx = useContext(ProductsCtx);
-  if(!ctx) return null;
-  const [state, dispatch] = ctx;
+  if (!ctx) return null;                 // Provider 還沒掛好時的保險
+
+  const [products /* 就是 Product[] */, dispatch] = ctx;
+
   return (
-    <div className="relative mx-auto mb-24 mt-24 w-full max-w-lg px-4">
+    <div className="space-y-3">
       <h3 className="mb-3 text-lg font-semibold">產品表</h3>
-      <div className="space-y-3">
-        {state.list.map(p=> (
-          <Card key={p.id} className="flex items-center justify-between p-4">
-            <button className="mr-3 text-pink-500" onClick={()=>dispatch({type:'toggleFav',id:p.id})}>
-              {p.fav? <Heart className="h-5 w-5 fill-pink-500"/>:<HeartOff className="h-5 w-5"/>}
-            </button>
-            <span className="flex-1 truncate font-medium">{String(p.id).padStart(2,'0')} {p.name}</span>
-            <Button variant="outline" size="sm" onClick={()=>nav(`/product/${p.id}`)}>more</Button>
-          </Card>
-        ))}
-      </div>
+
+      {products.map(p => (
+        <ProductCard key={p.id} product={p} />
+      ))}
+
+      {/* 示範：新增產品 */}
+      <button
+        onClick={() => {
+          const name = prompt('產品名稱？');
+          if (name) dispatch({ type: 'add', name });
+        }}
+        className="mt-6 rounded-lg bg-indigo-600 px-4 py-2 text-white"
+      >
+        ➕ 新增產品
+      </button>
     </div>
   );
 }

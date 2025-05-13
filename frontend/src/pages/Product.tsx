@@ -4,7 +4,7 @@ import { ProductsCtx } from '@/context/ProductsContext';
 import type { Product } from "@/context/ProductsContext";
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import ProductCard from "@/components/ui/ProductCard";
+import ProductCard from "@/components/ProductCard";
 
 export default function ProductPage() {
   const ctx = useContext(ProductsCtx);
